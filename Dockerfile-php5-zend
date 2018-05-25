@@ -3,7 +3,7 @@ FROM php:5
 RUN apt update \
     && apt install \
        zlib1g-dev libicu-dev \
-       mysql-client mysql-client-5.5 \
+       mysql-client \
        wget zip libmcrypt-dev \
        -y \
     && apt-get clean && apt-get autoclean && apt-get autoremove --purge -y \
