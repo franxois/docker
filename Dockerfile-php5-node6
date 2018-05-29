@@ -1,0 +1,8 @@
+FROM frieucaufb/php:5-zend
+
+RUN apt update && apt install -y gnupg python-pip libyaml-dev && \
+    curl -sL https://deb.nodesource.com/setup_6.x | bash - && \
+    apt install -y nodejs && \
+    php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" && \
+    php composer-setup.php --install-dir=/usr/bin --filename=composer && \
+    pip install awscli
