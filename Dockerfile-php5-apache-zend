@@ -11,11 +11,10 @@ RUN apt update \
        # used for i18n during ./setup.sh
        gettext \
        libmcrypt-dev \
-       -y \
-    && apt-get clean && apt-get autoclean && apt-get autoremove --purge -y \
-    && rm -rf /var/cache/apt/* && rm -rf /var/lib/apt/lists/*
-
-RUN docker-php-ext-configure intl && \
+       -y && \
+    apt-get clean && apt-get autoclean && apt-get autoremove --purge -y && \
+    rm -rf /var/cache/apt/* && rm -rf /var/lib/apt/lists/* && \
+    docker-php-ext-configure intl && \
     docker-php-ext-install -j$(nproc) pcntl intl calendar mysql mysqli mcrypt && \
     echo "date.timezone = \"Europe/Paris\"" >> /usr/local/etc/php/php.ini && \
     echo "display_errors = On" >> /usr/local/etc/php/php.ini && \
@@ -24,18 +23,14 @@ RUN docker-php-ext-configure intl && \
 # RUN pecl install xdebug-2.5.5
 # RUN docker-php-ext-enable xdebug
 
-# /usr/share/php doesn't exist anymore ... Without that it will silently fail :(
-RUN mkdir -p /usr/share/php
-
 # Add and decompress local file to /tmp. Zend will not change so why download at every build ?
 ADD lib/ZendFramework-1.12.20.tar.gz /tmp/
-RUN mv /tmp/ZendFramework-1.12.20/library/Zend /usr/share/php/ && rm -rf /tmp/*
+RUN mkdir -p /usr/share/php && mv /tmp/ZendFramework-1.12.20/library/Zend /usr/share/php/ && rm -rf /tmp/*
 
 ADD lib/wait-for-it.sh /opt/
 
-RUN echo 'alias ll="ls -alh"' >> ~/.bashrc
-
-RUN a2enmod rewrite
+RUN echo 'alias ll="ls -alh"' >> ~/.bashrc \
+    && a2enmod rewrite
 
 # Added for backoffice
 RUN a2enmod ssl
