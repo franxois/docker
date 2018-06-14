@@ -1,4 +1,4 @@
-FROM php:5-apache
+FROM php:5-apache-jessie
 
 # Since https://github.com/docker-library/php/pull/542
 # RUN rm /etc/apt/preferences.d/no-debian-php
