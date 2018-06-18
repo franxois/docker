@@ -5,7 +5,7 @@ RUN apt update \
        zlib1g-dev libicu-dev \
        mysql-client \
        wget zip libmcrypt-dev \
-       gnupg python-pip libyaml-dev \
+       gnupg python-pip python-dev libyaml-dev \
        -y \
     && \
     curl -sL https://deb.nodesource.com/setup_6.x | bash - && apt install -y nodejs \
