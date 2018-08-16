@@ -5,12 +5,13 @@ RUN apt update \
        zlib1g-dev libicu-dev \
        mysql-client \
        wget zip libmcrypt-dev \
+       git \
        -y \
     && apt-get clean && apt-get autoclean && apt-get autoremove --purge -y \
     && rm -rf /var/cache/apt/* && rm -rf /var/lib/apt/lists/* && rm -rf /tmp/* \
     && pecl install intl \
     && docker-php-ext-configure intl \
-    && docker-php-ext-install -j$(nproc) pcntl intl calendar mysql mysqli mcrypt \
+    && docker-php-ext-install -j$(nproc) pcntl intl calendar mysql mysqli mcrypt pdo pdo_mysql \
     && echo "date.timezone = \"Europe/Paris\"" >> /usr/local/etc/php/php.ini \
     && echo "display_errors = On" >> /usr/local/etc/php/php.ini \
     && echo "display_startup_errors = On" >> /usr/local/etc/php/php.ini
